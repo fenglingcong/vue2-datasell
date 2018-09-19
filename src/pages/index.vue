@@ -54,12 +54,6 @@ export default {
       }, (err) => {
         console.log(err)
       })
-    this.$http.post('/api/createOrder', {a: 1})
-      .then((res) => {
-        console.log(res)
-      }, (err) => {
-        console.log(err)
-      })
   },
   methods: {
     dosomething (index) {

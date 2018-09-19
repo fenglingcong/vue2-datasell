@@ -82,6 +82,7 @@ export default {
             let pow = res.body.data.userId + ''
             if (name === '123@123' && pow === '123123') {
               this.$emit('has-login', name)
+              localStorage.setItem('isLogin', name)
             } else {
               this.errorText = '用户名或密码错误'
             }

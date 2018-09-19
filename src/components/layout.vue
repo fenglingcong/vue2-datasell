@@ -58,6 +58,10 @@ export default {
     logForm,
     regForm
   },
+  created () {
+    let name = localStorage.getItem('isLogin') ? localStorage.getItem('isLogin') : ''
+    this.username = name
+  },
   methods: {
     logClick () {
       this.isShowLogDialog = true
@@ -78,6 +82,7 @@ export default {
     },
     logoutClick () {
       this.username = ''
+      localStorage.removeItem('isLogin')
     },
     resetComponent () {
       eventBus.$emit('reset-component')
