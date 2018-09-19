@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="resetComponent">
     <div class="app-head">
       <div class="app-head-inner">
         <router-link to="/">
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { eventBus } from '@/eventBus'
 import Dialog from '@/components/base/dialog'
 import logForm from '@/components/logForm'
 import regForm from '@/components/regForm'
@@ -77,6 +78,9 @@ export default {
     },
     logoutClick () {
       this.username = ''
+    },
+    resetComponent () {
+      eventBus.$emit('reset-component')
     }
   }
 }

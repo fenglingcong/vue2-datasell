@@ -7,6 +7,10 @@
         <VSelection :selections="products" @on-change="productChange"></VSelection>
       </div>
       <div class="order-list-option">
+        选择产品2：
+        <VSelection :selections="products" @on-change="productChange"></VSelection>
+      </div>
+      <div class="order-list-option">
         开始日期：
         <VDatePicker :date="startTime" :option="option" @change="getStartTime"></VDatePicker>
       </div>
@@ -123,8 +127,8 @@ export default {
         overlayOpacity: 0.5, // 0.5 as default
         dismissible: true // as true as default
       },
-      currentOrder: 'asc', // 升序
-      tableData: []
+      currentOrder: 'asc' // 升序
+      // tableData: []
     }
   },
   created () {
@@ -142,16 +146,27 @@ export default {
   },
   methods: {
     productChange (param) {
-      this.productId = param.value
-      this.getList()
+      this.$store.commit('updateparams', {
+        key: 'productId',
+        val: param.value
+      })
+      this.$store.dispatch('fetchOrderList')
     },
     getStartTime (time) {
-      this.startDate = time
-      this.getList()
+      this.$store.commit('updateparams', {
+        key: 'startDate',
+        val: time
+      })
+      this.$store.dispatch('fetchOrderList')
     },
     getEndTime (time) {
-      this.endDate = time
-      this.getList()
+      this.$store.commit('updateparams', {
+        key: 'endDate',
+        val: time
+      })
+      this.$store.dispatch('fetchOrderList')
+      // this.endDate = time
+      // this.getList()
     },
     getList () {
       let reqParams = {
@@ -185,11 +200,22 @@ export default {
   },
   watch: {
     query () {
-      this.getList()
+      this.$store.commit('updateparams', {
+        key: 'query',
+        val: this.query
+      })
+      this.$store.dispatch('fetchOrderList')
+      // this.getList()
     }
   },
   mounted () {
-    this.getList()
+    this.$store.dispatch('fetchOrderList')
+    console.log(this.$store)
+  },
+  computed: {
+    tableData () {
+      return this.$store.getters.getOrderList
+    }
   },
   components: {
     VSelection,
